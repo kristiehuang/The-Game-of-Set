@@ -33,6 +33,7 @@ public class Grid {
     //System.out.println("Cards = " + selectedCards + ", Locations = " + selectedLocs);
   }
 
+
   // Precondition: A Set has been successfully found
   // Postconditions: 
   //    * The number of columns is adjusted as needed to reflect removal of the set
@@ -52,6 +53,7 @@ public class Grid {
 
     // YOU WRITE THIS
   }
+  
   
   // Precondition: Three cards have been selected by the player
   // Postcondition: Game state, score, game message mutated, selected cards list cleared

@@ -1,5 +1,5 @@
-/* NAME:   YOUR_NAME_HERE
- * PERIOD: YOUR_CLASS_PERIOD_HERE
+/* NAME:   Kristie Huang
+ * PERIOD: B˚
  */
 
 PImage cimg;
@@ -168,9 +168,25 @@ void drawButtons() {
   }
 }
 
+
+
 public void newGame() {
-  // YOU_WRITE_THIS
+  deck = new Deck();
+  grid = new Grid();
+  score = 0;
+  currentCols = 4;
+  state = State.PLAYING;
+  message = 0;
+  
+  grid.cardsInPlay = currentCols * ROWS;
+  grid.display();
+  //grid. Make the grid add currentCols * ROWS cards to the board. (The Grid class has an appropriately named method for this.)
+  timeElapsed = 0;
+  runningTimerStart = millis();
+  
 }
+
+
 
 public void initFonts() {
   scoreFont = createFont("ComicSansMS-Bold", 32);
