@@ -15,8 +15,9 @@ public class Grid {
 
   // GRID MUTATION PROCEDURES
   
-  // 1. Highlight (or remove highlight)
-  // 2. Change the number of cards selected accordingly
+  // 1. Highlight (or remove highlight) selected card
+  // 2. Add (or remove) the location of the card in selectedLocs
+  // 3. Add the card to (or remove from) the list of selectedCards
   public void updateSelected(int col, int row) {
     Card card = board[col][row];
 
@@ -32,7 +33,6 @@ public class Grid {
 
     //System.out.println("Cards = " + selectedCards + ", Locations = " + selectedLocs);
   }
-
 
   // Precondition: A Set has been successfully found
   // Postconditions: 
@@ -53,7 +53,6 @@ public class Grid {
 
     // YOU WRITE THIS
   }
-  
   
   // Precondition: Three cards have been selected by the player
   // Postcondition: Game state, score, game message mutated, selected cards list cleared
@@ -125,9 +124,19 @@ public class Grid {
   
   // DEALING CARDS
 
-  public void addCardToBoard(Card card) {
+  // Preconditions: cardsInPlay contains the current number of cards on the board
+  //                the array board contains the cards that are on the board
+  // Postconditions: board has been updated to include the card
+  //                the number of cardsInPlay has been increased by one
+public void addCardToBoard(Card card) {
     // YOU WRITE THIS
-  }
+    int column = col(cardsInPlay);
+    int roww = row(cardsInPlay);
+    
+    board[column][roww] = card;
+    
+    cardsInPlay += 1;
+ }
     
   public void addColumn() {
     // YOU WRITE THIS
