@@ -52,6 +52,26 @@ public class Grid {
                               // documentation on ArrayList to see how sort(null) works
 
     // YOU WRITE THIS
+    if (cardsInPlay > 12 || deck.size() == 0) {
+      //new cards will not need to be dealt
+         if (cardsInPlay > 12) {
+           currentCols --;
+           //move cards from last locations -> locations of selectedLocs
+           for(Location selectLoc: selectedLocs) {
+             int co = selectLoc.getCol();
+             int ro = selectLoc.getRow();
+             board[co][ro] = board[currentCols - 1][ro];
+             board[currentCols - 1][ro] = null;
+           }
+
+      }
+    
+    }
+  else if (cardsInPlay == 12 && deck.size() != 0) {
+    
+    }
+  
+
   }
   
   // Precondition: Three cards have been selected by the player
@@ -140,6 +160,29 @@ public void addCardToBoard(Card card) {
     
   public void addColumn() {
     // YOU WRITE THIS
+    if (deck.size() == 0) { //no more cards in deck
+      message = 5;
+      return;
+    }
+    if (findSet().size() == 0) { //no sets on board
+      score += 5;
+      addCardToBoard(deck.getCard(0));
+      addCardToBoard(deck.getCard(1));
+      addCardToBoard(deck.getCard(2));
+      currentCols++;
+      message = 6;
+      return;
+    }
+    else { //set on board
+      score -= 5;
+      message = 4;
+            addCardToBoard(deck.getCard(0));
+      addCardToBoard(deck.getCard(1));
+      addCardToBoard(deck.getCard(2));
+      currentCols++;
+      return;
+ 
+    }
   }
 
   

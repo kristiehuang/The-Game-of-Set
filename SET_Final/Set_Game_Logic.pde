@@ -1,50 +1,75 @@
 boolean sameColor(Card a, Card b, Card c) {
   // YOU WRITE THIS
-  boolean sameCol = (a.getColor().equals(b.getColor()) && (b.getColor().equals(c.getColor())));
+  boolean sameCol = true;
+  if (!a.getColor().equals(b.getColor()) || !b.getColor().equals(c.getColor()) || !c.getColor().equals(a.getColor())) {
+    sameCol = false;
+  }
   return sameCol;
 }
 
 boolean sameShape(Card a, Card b, Card c) {
   // YOU WRITE THIS
-  boolean sameShap = (a.getShape().equals(b.getShape()) && (b.getShape().equals(c.getShape())));
+  boolean sameShap = true;
+  if (!a.getShape().equals(b.getShape()) || !b.getShape().equals(c.getShape()) || !c.getShape().equals(a.getShape())) {
+    sameShap = false;
+  }
   return sameShap;
 }
 
 boolean sameFill(Card a, Card b, Card c) {
   // YOU WRITE THIS
-  boolean sameFi = (a.getFill().equals(b.getFill()) && (b.getFill().equals(c.getFill())));
-  return sameFi;
+  boolean sameFil = true;
+  if (!a.getFill().equals(b.getFill()) || !b.getFill().equals(c.getFill()) || !c.getFill().equals(a.getFill())) {
+    sameFil = false;
+  }
+  return sameFil;
 }
 
 boolean sameCount(Card a, Card b, Card c) {
   // YOU WRITE THIS
-  boolean sameCt = (a.getCount().equals(b.getCount()) && (b.getCount().equals(c.getCount())));
+  boolean sameCt = true;
+  if (!a.getCount().equals(b.getCount()) || !b.getCount().equals(c.getCount()) || !c.getCount().equals(a.getCount())) {
+    sameCt = false;
+  }
   return sameCt;
 }
 
 boolean diffColor(Card a, Card b, Card c) {
   // YOU WRITE THIS
-  boolean diffCol = !(a.getColor().equals(b.getColor()) && !(b.getColor().equals(c.getColor()))) && !(b.getColor().equals(a.getColor()));
+  boolean diffCol = true;
+  if (a.getColor().equals(b.getColor()) || b.getColor().equals(c.getColor()) || c.getColor().equals(a.getColor())) {
+    diffCol = false;
+  }
   return diffCol;
 }
 
 boolean diffShape(Card a, Card b, Card c) {
   // YOU WRITE THIS
-  boolean diffShap = !(a.getShape().equals(b.getShape()) && !(b.getShape().equals(c.getShape()))) && !(b.getShape().equals(a.getShape()));
-  return diffShap;
+  boolean diffShp = true;
+  if (a.getShape().equals(b.getShape()) || b.getShape().equals(c.getShape()) || c.getShape().equals(a.getShape())) {
+    diffShp = false;
+  }
+  return diffShp;
 }
 
 boolean diffFill(Card a, Card b, Card c) {
   // YOU WRITE THIS
-  return false;
+  boolean diffFi = true;
+  if (a.getFill().equals(b.getFill()) || b.getFill().equals(c.getFill()) || c.getFill().equals(a.getFill())) {
+    diffFi = false;
+  }
+  return diffFi;
 }
 
 boolean diffCount(Card a, Card b, Card c) {
   // YOU WRITE THIS
-  return false;
-}  
+  boolean diffCt = true;
+  if (a.getCount().equals(b.getCount()) || b.getCount().equals(c.getCount()) || c.getCount().equals(a.getCount())) {
+    diffCt = false;
+  }
+  return diffCt;}  
 
 boolean isSet(Card a, Card b, Card c) {
   // YOU WRITE THIS
-  return false;
+  return (diffCount(a, b, c) || sameCount(a, b, c)) && (diffFill(a, b, c) || sameFill(a, b, c)) && (diffShape(a, b, c) || sameShape(a, b, c)) && (diffColor(a, b, c) || sameColor(a, b, c));
 }
