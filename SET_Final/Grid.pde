@@ -52,13 +52,12 @@ public class Grid {
     // documentation on ArrayList to see how sort(null) works
 
     // YOU WRITE THIS
-    System.out.println("helpsdfsfs");
 
     if (cardsInPlay > 12 || deck.size() == 0) {
       System.out.println("helpss");
 
       //new cards will not need to be dealt
-      if (cardsInPlay > 12) {
+      if (cardsInPlay > 12) { //will be more than 12 if add set w no set
         currentCols--;
       }
       //move cards from last locations -> locations of selectedLocs
@@ -189,7 +188,9 @@ public class Grid {
 
   public boolean isGameOver() {
     // YOU WRITE THIS
-    return false;
+    boolean gameOvr = (deck.size() == 0 && (cardsInPlay == 0 || findSet().isEmpty()));
+    return gameOvr;
+  
   }
 
   public boolean tripleSelected() {
