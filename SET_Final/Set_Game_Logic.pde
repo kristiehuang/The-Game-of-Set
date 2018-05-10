@@ -67,7 +67,8 @@ boolean diffCount(Card a, Card b, Card c) {
   if (a.getCount().equals(b.getCount()) || b.getCount().equals(c.getCount()) || c.getCount().equals(a.getCount())) {
     diffCt = false;
   }
-  return diffCt;}  
+  return diffCt;
+}  
 
 boolean isSet(Card a, Card b, Card c) {
   // YOU WRITE THIS

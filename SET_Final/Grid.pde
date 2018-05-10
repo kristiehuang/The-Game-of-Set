@@ -2,10 +2,10 @@ public class Grid {
   // In the physical SET game, cards are placed on the table.
   // The table contains the grid of cards and is typically called the board.
   Card[][] board = new Card[MAX_COLS][ROWS];   // Array that contains cards
-  
+
   ArrayList<Location> selectedLocs = new ArrayList<Location>();  // Locations selected by the player
   ArrayList<Card> selectedCards = new ArrayList<Card>();         // Cards selected by the player 
-                                                                 // (corresponds to the locations)  
+  // (corresponds to the locations)  
   int cardsInPlay;    // Number of cards visible on the board
 
   public Grid() { 
@@ -14,7 +14,7 @@ public class Grid {
 
 
   // GRID MUTATION PROCEDURES
-  
+
   // 1. Highlight (or remove highlight) selected card
   // 2. Add (or remove) the location of the card in selectedLocs
   // 3. Add the card to (or remove from) the list of selectedCards
@@ -45,35 +45,40 @@ public class Grid {
     // column should be moved to locations where cards that formed the selected set
     // Put the locations of the selected cells in order.  Cards from the rightmost column
     // that are part of the set should be removed instead of being migrated.
-    
+
     selectedLocs.sort(null);  // Don't delete this line as it orders the selected locations
-                              // You may wish to look up how the Location class decides
-                              // how to compare two different locations.  Also look up the
-                              // documentation on ArrayList to see how sort(null) works
+    // You may wish to look up how the Location class decides
+    // how to compare two different locations.  Also look up the
+    // documentation on ArrayList to see how sort(null) works
 
     // YOU WRITE THIS
+    System.out.println("helpsdfsfs");
+
     if (cardsInPlay > 12 || deck.size() == 0) {
+      System.out.println("helpss");
+
       //new cards will not need to be dealt
-         if (cardsInPlay > 12) {
-           currentCols --;
-           //move cards from last locations -> locations of selectedLocs
-           for(Location selectLoc: selectedLocs) {
-             int co = selectLoc.getCol();
-             int ro = selectLoc.getRow();
-             board[co][ro] = board[currentCols - 1][ro];
-             board[currentCols - 1][ro] = null;
-           }
-
+      if (cardsInPlay > 12) {
+        currentCols--;
       }
-    
+      //move cards from last locations -> locations of selectedLocs
+      for (Location selectLoc : selectedLocs) {
+        int co = selectLoc.getCol();
+        int ro = selectLoc.getRow();
+        board[co][ro] = board[currentCols - 1][0];
+        cardsInPlay -= 1;
+        //board[currentCols - 1][0] = null;
+        System.out.println("help");
+      }
+    } else if (cardsInPlay == 12 && deck.size() != 0) {
+      for (Location selectLoc : selectedLocs) {
+        int co = selectLoc.getCol();
+        int ro = selectLoc.getRow();
+        board[co][ro] = deck.deal();
+      }
     }
-  else if (cardsInPlay == 12 && deck.size() != 0) {
-    
-    }
-  
-
   }
-  
+
   // Precondition: Three cards have been selected by the player
   // Postcondition: Game state, score, game message mutated, selected cards list cleared
   public void processTriple() {
@@ -93,10 +98,10 @@ public class Grid {
     }
     clearSelected();
   }
-  
-  
+
+
   // DISPLAY CODE
-  
+
   public void display() {
     int cols = cardsInPlay / 3;
     for (int col = 0; col < cols; col++) {
@@ -119,14 +124,14 @@ public class Grid {
       highlight = SELECTED_HIGHLIGHT;
     } else {
       highlight = isSet(selectedCards.get(0), selectedCards.get(1), selectedCards.get(2)) ?
-                  CORRECT_HIGHLIGHT :
-                  INCORRECT_HIGHLIGHT;
+        CORRECT_HIGHLIGHT :
+        INCORRECT_HIGHLIGHT;
     }
     for (Location loc : selectedLocs) {
       drawHighlight(loc, highlight);
     }
   }
-  
+
   public void drawHighlight(Location loc, color highlightColor) {
     stroke(highlightColor);
     strokeWeight(5);
@@ -141,23 +146,23 @@ public class Grid {
     strokeWeight(1);
   }
 
-  
+
   // DEALING CARDS
 
   // Preconditions: cardsInPlay contains the current number of cards on the board
   //                the array board contains the cards that are on the board
   // Postconditions: board has been updated to include the card
   //                the number of cardsInPlay has been increased by one
-public void addCardToBoard(Card card) {
+  public void addCardToBoard(Card card) {
     // YOU WRITE THIS
     int column = col(cardsInPlay);
     int roww = row(cardsInPlay);
-    
+
     board[column][roww] = card;
-    
+
     cardsInPlay += 1;
- }
-    
+  }
+
   public void addColumn() {
     // YOU WRITE THIS
     if (deck.size() == 0) { //no more cards in deck
@@ -166,28 +171,22 @@ public void addCardToBoard(Card card) {
     }
     if (findSet().size() == 0) { //no sets on board
       score += 5;
-      addCardToBoard(deck.getCard(0));
-      addCardToBoard(deck.getCard(1));
-      addCardToBoard(deck.getCard(2));
+      addCardToBoard(deck.deal());
+      addCardToBoard(deck.deal());
+      addCardToBoard(deck.deal());
       currentCols++;
       message = 6;
       return;
-    }
-    else { //set on board
+    } else { //set on board
       score -= 5;
       message = 4;
-            addCardToBoard(deck.getCard(0));
-      addCardToBoard(deck.getCard(1));
-      addCardToBoard(deck.getCard(2));
-      currentCols++;
       return;
- 
     }
   }
 
-  
+
   // GAME PROCEDURES
-  
+
   public boolean isGameOver() {
     // YOU WRITE THIS
     return false;
@@ -196,14 +195,14 @@ public void addCardToBoard(Card card) {
   public boolean tripleSelected() {
     return (selectedLocs.size() == 3);
   }
-   
+
   // Preconditions: --
   // Postconditions: The selected locations and cards ArrayLists are empty
   public void clearSelected() {
     selectedLocs.clear();
     selectedCards.clear();
   }
-  
+
   // findSet(): If there is a set on the board, existsSet() returns an ArrayList containing
   // the locations of three cards that form a set, an empty ArrayList (not null) otherwise
   // Preconditions: --
@@ -225,17 +224,17 @@ public void addCardToBoard(Card card) {
     return new ArrayList<Location>();
   }
 
-  
+
   // UTILITY FUNCTIONS FOR GRID CLASS
-  
+
   public int col(int n) {
     return n/3;
   }
-  
+
   public int row(int n) {
     return n % 3;
   }
-   
+
   public int rightOffset() {
     return GRID_LEFT_OFFSET + currentCols * (CARD_WIDTH + GRID_X_SPACER);
   }

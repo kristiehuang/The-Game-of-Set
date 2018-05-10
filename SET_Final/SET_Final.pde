@@ -14,10 +14,18 @@ final int LEFT_OFFSET = 6;
 final int TOP_OFFSET = 9;
 
 // Properties of cards expressed as symbols
-public enum CardColor { GREEN, PURPLE, RED };
-public enum CardCount { ONE, TWO, THREE };
-public enum CardFill { SOLID, STRIPED, OPEN };
-public enum CardShape { CAPSULE, SQUIGGLY, DIAMOND };
+public enum CardColor { 
+  GREEN, PURPLE, RED
+};
+public enum CardCount { 
+  ONE, TWO, THREE
+};
+public enum CardFill { 
+  SOLID, STRIPED, OPEN
+};
+public enum CardShape { 
+  CAPSULE, SQUIGGLY, DIAMOND
+};
 
 // For locating cards on the play grid
 public final int GRID_LEFT_OFFSET = 16;   // Distance from left to start drawing grid
@@ -28,7 +36,7 @@ public final int BEGIN_COLS = 4;          // Beginning number of columns in the 
 public final int ROWS = 3;                // Number of rows in the grid
 public final int MAX_COLS = 7;            // Maximum number of columns in the grid
 public int currentCols = BEGIN_COLS;      // Important to program in general, but also good
-                                          // for testing special cases (cardsInPlay == 3, e.g.)
+// for testing special cases (cardsInPlay == 3, e.g.)
 
 // From left of window to right edge of grid
 //public int grid_right = GRID_LEFT_OFFSET + currentCols * (CARD_WIDTH + GRID_X_SPACER);
@@ -75,8 +83,8 @@ public final color KEY_OPTIONS_FILL = #000000;
 public final int KEY_OPTIONS_LEFT_OFFSET = GRID_LEFT_OFFSET;
 public final int KEY_OPTIONS_TOP_OFFSET = BUTTON_TOP_OFFSET + BUTTON_HEIGHT + 48;
 public final String keyOptions = "q, w, e, r, [t, y, u]: top row;\na, s, d, f, [g, h, j]: second row;\n" +
-                                 "z, x, c, v, [b, n, m]: third row\n" +
-                                 "+ to add cards, - to find a set, SPACE to pause, ENTER/RETURN for a new game";
+  "z, x, c, v, [b, n, m]: third row\n" +
+  "+ to add cards, - to find a set, SPACE to pause, ENTER/RETURN for a new game";
 
 public final color BACKGROUND_COLOR = color(189, 195, 199);
 public final color SELECTED_HIGHLIGHT = #FFDD00;
@@ -100,40 +108,42 @@ public int timeElapsed = 0;
 //   2 -> Find Set selected
 //   3 -> Game Over
 //   4 -> Game Paused
-public enum State { PLAYING, EVAL_SET, FIND_SET, GAME_OVER, PAUSED };
+public enum State { 
+  PLAYING, EVAL_SET, FIND_SET, GAME_OVER, PAUSED
+};
 State state = State.PLAYING;
 
 void setup() {
   size(1056, 568, P3D);
   background(BACKGROUND_COLOR);
-  
+
   fill(#000000);
   text("Loading...", 50, 150);
-  
+
   newGame();
 
   initFonts();  
-  
+
   initSpriteSheet();
 }
 
 void draw() {
   background(BACKGROUND_COLOR);
-  
+
   showScore();
   showTimer();
   showMessage();
   drawButtons();
   drawDirections();
-  
+
   grid.display();
   grid.highlightSelectedCards();
-  
+
   if (grid.tripleSelected() && state == State.PLAYING) {
     state = State.EVAL_SET;
     highlightCounter = 0;
   }
-  
+
   // Three cards selected; process them
   if (state == State.EVAL_SET) {
     if (highlightCounter == HIGHLIGHT_TICKS) {  // 35 ticks showing special highlight
@@ -141,7 +151,7 @@ void draw() {
     } else {
       highlightCounter = highlightCounter+1;
     }
-  // Find Set selected
+    // Find Set selected
   } else if (state == State.FIND_SET) {
     if (highlightCounter == FIND_SET_TICKS) {  // 35 ticks showing special highlight
       state = State.PLAYING;
@@ -156,13 +166,13 @@ void draw() {
 // For details on the 8-argument version of image(), see:
 // https://forum.processing.org/one/topic/image-ing-a-part-of-a-pimage.html
 void drawCard(int cardCol, int cardRow, int xpos, int ypos) {
-  image(cimg, xpos, ypos, CARD_WIDTH+CARD_X_SPACER, CARD_HEIGHT+CARD_Y_SPACER,
-              LEFT_OFFSET + cardCol*CARD_WIDTH, TOP_OFFSET + cardRow*CARD_HEIGHT, 
-              (cardCol+1)*CARD_WIDTH+CARD_X_SPACER, (cardRow+1)*CARD_HEIGHT+CARD_Y_SPACER);
+  image(cimg, xpos, ypos, CARD_WIDTH+CARD_X_SPACER, CARD_HEIGHT+CARD_Y_SPACER, 
+    LEFT_OFFSET + cardCol*CARD_WIDTH, TOP_OFFSET + cardRow*CARD_HEIGHT, 
+    (cardCol+1)*CARD_WIDTH+CARD_X_SPACER, (cardRow+1)*CARD_HEIGHT+CARD_Y_SPACER);
 }
 
 void drawRow(int row) {
-  for (int col = 0; col < SHEET_LENGTH; col++)  {
+  for (int col = 0; col < SHEET_LENGTH; col++) {
     drawCard(col, row, col*(CARD_WIDTH+CARD_X_SPACER), row*(CARD_HEIGHT+CARD_Y_SPACER));
   }
 }
@@ -178,14 +188,14 @@ void drawCards() {
     drawRow(row);
   }
 }
-      
+
 void drawButtons() {
   // Start, Stop, Clear rectangles in gray
   fill(#DDDDDD);
   for (int i = 0; i < NUM_BUTTONS; i++) {
     rect(BUTTON_LEFT_OFFSET+i*(BUTTON_WIDTH+12), BUTTON_TOP_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
   }
-  
+
   // Set text color on the buttons to blue
   fill(#0000FF);
 
@@ -206,11 +216,11 @@ public void newGame() {
   currentCols = 4;
   state = State.PLAYING;
   message = 0;
-  
-  for(int i = 0; i < currentCols * ROWS; i++) {
-    grid.addCardToBoard(deck.getCard(i));
+
+  for (int i = 0; i < currentCols * ROWS; i++) {
+    grid.addCardToBoard(deck.deal());
   }
-  
+
   timeElapsed = 0;
   runningTimerStart = millis();
 }
@@ -253,18 +263,41 @@ public void showMessage() {
   textFont(messageFont);
   String str = "";
   switch(message) {
-    case 0: str = "Welcome to SET!"; break;
-    case 1: str = "Set found!"; break;
-    case 2: str = "Sorry, not a set!"; break;
-    case 3: str = "Cards added to board..."; break;
-    case 4: str = "There is a set on the board!"; break;
-    case 5: str = "No cards left in the deck!"; break;
-    case 6: str = "No set on board to find!"; break;
-    case 7: str = "GAME OVER!"; break;
-    case 8: str = "\"" + key + "\"" + " not an active key!"; break;
-    case 9: str = "Game paused"; break;
-    case 10: str = "Game resumed"; break;
-    default: str = "Something is wrong. :-(";
+  case 0: 
+    str = "Welcome to SET!"; 
+    break;
+  case 1: 
+    str = "Set found!"; 
+    break;
+  case 2: 
+    str = "Sorry, not a set!"; 
+    break;
+  case 3: 
+    str = "Cards added to board..."; 
+    break;
+  case 4: 
+    str = "There is a set on the board!"; 
+    break;
+  case 5: 
+    str = "No cards left in the deck!"; 
+    break;
+  case 6: 
+    str = "No set on board to find!"; 
+    break;
+  case 7: 
+    str = "GAME OVER!"; 
+    break;
+  case 8: 
+    str = "\"" + key + "\"" + " not an active key!"; 
+    break;
+  case 9: 
+    str = "Game paused"; 
+    break;
+  case 10: 
+    str = "Game resumed"; 
+    break;
+  default: 
+    str = "Something is wrong. :-(";
   }
   text(str, MESSAGE_LEFT_OFFSET, MESSAGE_TOP_OFFSET);
 }
