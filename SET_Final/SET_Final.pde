@@ -1,5 +1,5 @@
-/* NAME:   YOUR_NAME_HERE
- * PERIOD: YOUR_CLASS_PERIOD_HERE
+/* NAME:   Kristie Huang
+ * PERIOD: B˚
  */
 
 PImage cimg;
