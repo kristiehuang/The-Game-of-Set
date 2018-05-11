@@ -160,6 +160,7 @@ public class Grid {
     board[column][roww] = card;
 
     cardsInPlay += 1;
+
   }
 
   public void addColumn() {
