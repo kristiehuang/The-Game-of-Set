@@ -53,27 +53,39 @@ public class Grid {
 
     // YOU WRITE THIS
 
+    System.out.println("deck size" + deck.size());
     if (cardsInPlay > 12 || deck.size() == 0) { 
-      //A: Consolidate
       int lastCol = currentCols - 1;
-  
+      System.out.println("selectedLocs" + selectedLocs);
+
       for (Location selectLoc : selectedLocs) {
-          int co = selectLoc.getCol();
-          int ro = selectLoc.getRow();
-          if(co < lastCol){  
-            //if it is not in last column, replace it with the one from last column
-            for(int i = 0; i<3; i++){
-              if(board[lastCol][i] != null){
-                board[co][ro] = board[lastCol][i];
-                break;
-              }
+        int co = selectLoc.getCol();
+        int ro = selectLoc.getRow();
+
+        if (co < lastCol) {  
+          System.out.println("selected card is NOT in last col");
+
+          //if it is not in last column, replace it with the one from last column
+          for (int i = 0; i < 3; i++) {
+            Location last = new Location(lastCol, i);
+            System.out.println("last loc" + last);
+            
+            if (board[lastCol][i] != null && !selectedLocs.contains(last)) {
+              System.out.println("laasd"); //why is it going into this if statement if selectedLocs DOES contain Last
+
+              board[co][ro] = board[lastCol][i];
+              board[lastCol][i] = null;
+              break;
             }
-          }else{
-            //If it is at last column
-            board[co][ro] = null;
           }
-          cardsInPlay --;
+        } else {
+          //If it is at last column
+          System.out.println("selected card is in last col");
+          //board[co][ro] = null;
+        }
+        cardsInPlay--;
       }
+      currentCols--;
     } else if (cardsInPlay == 12 && deck.size() != 0) { 
       //B: replace existing cards
       for (Location selectLoc : selectedLocs) {
@@ -82,7 +94,7 @@ public class Grid {
         board[co][ro] = deck.deal();
       }
     }
-    
+
     display();  //Display board again
   }
 
