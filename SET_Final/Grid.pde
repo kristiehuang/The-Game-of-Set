@@ -53,43 +53,37 @@ public class Grid {
 
     // YOU WRITE THIS
 
-    if (cardsInPlay > 12 || deck.size() == 0) { //BROKEN BROKEN
-      System.out.println("helpss");
-
-      //new cards will not need to be dealt
-
-      //move cards from last locations -> locations of selectedLocs
-      for (Location selectLoc : selectedLocs) { // BROKEN BROKEN BROKEN
-        int co = selectLoc.getCol();
-        int ro = selectLoc.getRow();
-        System.out.println("currentCols" + currentCols);
-        System.out.println("cards in play" + cardsInPlay);
-
-
-
-        board[co][ro] = board[currentCols - 1][row(cardsInPlay)];
-
-        //bBRRORKENENENEN
-        //for (int i = ROWS; i > 0; i--) {
-        //  if (board[currentCols - 1][i - 1] != null) {
-        //    board[co][ro] = board[currentCols - 1][i - 1];
-        //    i--;
-        //  }
-        //}
-        cardsInPlay -= 1;
-        System.out.println("help");
+    if (cardsInPlay > 12 || deck.size() == 0) { 
+      //A: Consolidate
+      int lastCol = currentCols - 1;
+  
+      for (Location selectLoc : selectedLocs) {
+          int co = selectLoc.getCol();
+          int ro = selectLoc.getRow();
+          if(co < lastCol){  
+            //if it is not in last column, replace it with the one from last column
+            for(int i = 0; i<3; i++){
+              if(board[lastCol][i] != null){
+                board[co][ro] = board[lastCol][i];
+                break;
+              }
+            }
+          }else{
+            //If it is at last column
+            board[co][ro] = null;
+          }
+          cardsInPlay --;
       }
-      if (cardsInPlay > 12) { //delete 3 cards off board
-        currentCols--;
-        System.out.println("asdfasf");
-      }
-    } else if (cardsInPlay == 12 && deck.size() != 0) { //replace existing cards
+    } else if (cardsInPlay == 12 && deck.size() != 0) { 
+      //B: replace existing cards
       for (Location selectLoc : selectedLocs) {
         int co = selectLoc.getCol();
         int ro = selectLoc.getRow();
         board[co][ro] = deck.deal();
       }
     }
+    
+    display();  //Display board again
   }
 
   // Precondition: Three cards have been selected by the player
