@@ -109,7 +109,7 @@ public class Grid {
         // YOU WRITE THIS
         state = State.GAME_OVER;
         runningTimerEnd = millis();
-        timerScore();
+        score += timerScore();
         message = 7;
       } else {
         state = State.PLAYING;
