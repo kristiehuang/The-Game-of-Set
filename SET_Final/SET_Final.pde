@@ -214,13 +214,11 @@ public void newGame() {
   grid = new Grid();
   score = 0;
   currentCols = 4;
-
   state = State.PLAYING;
   message = 0;
   for (int i = 0; i < currentCols * ROWS; i++) {
     grid.addCardToBoard(deck.deal());
   }
-
   timeElapsed = 0;
   runningTimerStart = millis();
 }

@@ -5,7 +5,7 @@ public class Grid {
 
   ArrayList<Location> selectedLocs = new ArrayList<Location>();  // Locations selected by the player
   ArrayList<Card> selectedCards = new ArrayList<Card>();         // Cards selected by the player 
-  // (corresponds to the locations)  
+                                                                 // (corresponds to the locations)  
   int cardsInPlay;    // Number of cards visible on the board
 
   public Grid() { 
@@ -53,42 +53,29 @@ public class Grid {
 
     // YOU WRITE THIS
 
-    System.out.println("*********************deck size: " + deck.size());
-    if (cardsInPlay > 12 || deck.size() == 0) { 
-      int lastCol = currentCols - 1;
-      System.out.println("selectedLocs" + selectedLocs);
+    System.out.println("deck size remaining: " + deck.size());
 
+    if (cardsInPlay > 12 || deck.size() == 0) { //9A - consolidate
+      int lastCol = currentCols - 1;
       for (Location selectLoc : selectedLocs) {
         int co = selectLoc.getCol();
         int ro = selectLoc.getRow();
 
         if (co < lastCol) {  
-          System.out.println("selected card is NOT in last col: " + selectLoc);
-
-          //if it is not in last column, replace it with the one from last column
           for (int i = 0; i < 3; i++) {
             Card last = board[lastCol][i];
-            System.out.println("Check card in last row:" + last);
-            
-            if (board[lastCol][i] != null && !selectedCards.contains(last)) {
-              System.out.println("The card in last row is NOT part of selected. Move to left");
+
+            if (board[lastCol][i] != null && !selectedCards.contains(last)) { //swap in card in lastCol
               board[co][ro] = board[lastCol][i];
               board[lastCol][i] = null;
               break;
-            }else{
-              System.out.println("The card in last row is part of selected");
             }
           }
-        } else {
-          //If it is at last column
-          System.out.println("selected card is in last col");
-          //board[co][ro] = null;
         }
         cardsInPlay--;
       }
       currentCols--;
-    } else if (cardsInPlay == 12 && deck.size() != 0) { 
-      //B: replace existing cards
+    } else if (cardsInPlay == 12 && deck.size() != 0) { //9B - regular swapping
       for (Location selectLoc : selectedLocs) {
         int co = selectLoc.getCol();
         int ro = selectLoc.getRow();
@@ -96,7 +83,7 @@ public class Grid {
       }
     }
 
-    display();  //Display board again
+    display(); //reload board just in case
   }
 
   // Precondition: Three cards have been selected by the player
@@ -130,7 +117,7 @@ public class Grid {
     int cols = cardsInPlay / 3;
     for (int col = 0; col < cols; col++) {
       for (int row = 0; row < ROWS; row++) {
-        board[col][row].display(col, row); //<>//
+        board[col][row].display(col, row);
       }
     }
   }
@@ -181,15 +168,13 @@ public class Grid {
     // YOU WRITE THIS
     int column = col(cardsInPlay);
     int roww = row(cardsInPlay);
-
     board[column][roww] = card;
-
-    cardsInPlay += 1;
+    cardsInPlay++;
   }
 
   public void addColumn() {
     // YOU WRITE THIS
-    if (deck.size() == 0) { //no more cards in deck //<>//
+    if (deck.size() == 0) { //no more cards in deck
       message = 5;
       return;
     }

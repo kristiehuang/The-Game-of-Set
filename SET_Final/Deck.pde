@@ -9,10 +9,13 @@ public class Deck {
     for (int col = 0; col < SHEET_LENGTH; col++) {
       for (int row = 0; row < SHEET_LENGTH; row++) {
         cards.add(new Card(col, row));
-
       }
     }
-    
+
+    //for testing with only 6 cards
+    //for (int row = 0; row < 6; row++) {
+    //  cards.add(new Card(0, row));
+    //}
   }
 
   public Card getCard(int n) {
