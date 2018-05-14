@@ -38,11 +38,7 @@ public int timerScore() {
   // the GREATER of:
   //    300 minus the number of seconds taken when the game ends
   //      0
-  int points = 0;
-  int finishSeconds = (runningTimerEnd - runningTimerStart + timeElapsed) / 1000;
-  if(finishSeconds < 300){
-    points = 300 - finishSeconds;
-  }
+  int points = 300 - ((runningTimerEnd - runningTimerStart + timeElapsed) / 1000);
   System.out.println(Math.max(points, 0));
   return Math.max(points, 0);
   
