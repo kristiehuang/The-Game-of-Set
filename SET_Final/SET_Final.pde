@@ -213,8 +213,7 @@ public void newGame() {
   deck = new Deck();
   grid = new Grid();
   score = 0;
-  currentCols = 2;
-  //  currentCols = 4;
+  currentCols = 4;
 
   state = State.PLAYING;
   message = 0;

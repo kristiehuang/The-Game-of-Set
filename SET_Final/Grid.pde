@@ -53,7 +53,7 @@ public class Grid {
 
     // YOU WRITE THIS
 
-    System.out.println("deck size" + deck.size());
+    System.out.println("*********************deck size: " + deck.size());
     if (cardsInPlay > 12 || deck.size() == 0) { 
       int lastCol = currentCols - 1;
       System.out.println("selectedLocs" + selectedLocs);
@@ -63,7 +63,7 @@ public class Grid {
         int ro = selectLoc.getRow();
 
         if (co < lastCol) {  
-          System.out.println("selected card is NOT in last col");
+          System.out.println("selected card is NOT in last col: " + selectLoc);
 
           //if it is not in last column, replace it with the one from last column
           for (int i = 0; i < 3; i++) {
@@ -75,6 +75,8 @@ public class Grid {
               board[co][ro] = board[lastCol][i];
               board[lastCol][i] = null;
               break;
+            }else{
+              System.out.println("The card in last row is part of selected");
             }
           }
         } else {
@@ -128,7 +130,7 @@ public class Grid {
     int cols = cardsInPlay / 3;
     for (int col = 0; col < cols; col++) {
       for (int row = 0; row < ROWS; row++) {
-        board[col][row].display(col, row);
+        board[col][row].display(col, row); //<>//
       }
     }
   }
@@ -187,7 +189,7 @@ public class Grid {
 
   public void addColumn() {
     // YOU WRITE THIS
-    if (deck.size() == 0) { //no more cards in deck
+    if (deck.size() == 0) { //no more cards in deck //<>//
       message = 5;
       return;
     }
