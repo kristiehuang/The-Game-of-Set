@@ -67,12 +67,11 @@ public class Grid {
 
           //if it is not in last column, replace it with the one from last column
           for (int i = 0; i < 3; i++) {
-            Location last = new Location(lastCol, i);
-            System.out.println("last loc" + last);
+            Card last = board[lastCol][i];
+            System.out.println("Check card in last row:" + last);
             
-            if (board[lastCol][i] != null && !selectedLocs.contains(last)) {
-              System.out.println("laasd"); //why is it going into this if statement if selectedLocs DOES contain Last
-
+            if (board[lastCol][i] != null && !selectedCards.contains(last)) {
+              System.out.println("The card in last row is NOT part of selected. Move to left");
               board[co][ro] = board[lastCol][i];
               board[lastCol][i] = null;
               break;
